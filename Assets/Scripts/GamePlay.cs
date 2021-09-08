@@ -79,7 +79,7 @@ public class GamePlay : MonoBehaviour
             if (collision.transform.position.y < gameObject.transform.position.y)
                 m_Rigidbody.AddForce(new Vector3(0, 700, 0));
             //else m_Rigidbody.AddForce(new Vector3(, -200, 0));
-            m_Rigidbody.angularVelocity = new Vector3(0, 0, -20);
+            m_Rigidbody.angularVelocity = new Vector3(0, 0, -800);
         }
         
         if (collision.gameObject.tag == "Ground")
@@ -184,7 +184,7 @@ public class GamePlay : MonoBehaviour
             m_Rigidbody.isKinematic = false;
         }
         m_Rigidbody.AddForce(new Vector3(0, 100, 0));
-        m_Rigidbody.AddForceAtPosition(force, transform.position - new Vector3(90, 0, 0));
+        m_Rigidbody.AddForceAtPosition(force, transform.position - new Vector3(200, 0, 0));
     }
 
     void AdjustRotation()
@@ -199,7 +199,7 @@ public class GamePlay : MonoBehaviour
         }
         else if (gameObject.transform.right.x < 0.9)
         {
-            m_Rigidbody.angularVelocity = new Vector3(0, 0, -80);
+            m_Rigidbody.angularVelocity = new Vector3(0, 0, -800);
             isSlow = false;
         }
     }
