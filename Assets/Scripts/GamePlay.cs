@@ -39,7 +39,7 @@ public class GamePlay : MonoBehaviour
     {
         m_Rigidbody = GetComponent<Rigidbody>();
         bladeCollider = blade.GetComponent<Collider>();
-        m_Rigidbody.centerOfMass = new Vector3(-0.5f, 0, 0);
+        //m_Rigidbody.centerOfMass = new Vector3(-0.5f, 0, 0);
         scene = SceneManager.GetActiveScene();
         gameController = GameObject.FindGameObjectWithTag("GameController");
         passedCheckPoint = false;
@@ -52,24 +52,16 @@ public class GamePlay : MonoBehaviour
     {
         if (Time.timeScale > 0)
         {
+            
             if (Input.GetButtonDown("Fire1"))
                 Jump();
             AdjustRotation();
+
         }
     }
 
     void OnCollisionEnter(Collision collision)
     {
-        //if (Time.time - lastKinematic > kinematicTime)
-        //    if (collision.GetContact(0).thisCollider.tag == "Blade" &&
-        //       (collision.GetContact(0).otherCollider.tag == "Holder" ||
-        //        collision.GetContact(0).otherCollider.tag == "CheckPoint" ||
-        //        collision.GetContact(0).otherCollider.tag == "Bonus"))
-        //    {
-        //        audioSource.clip = soundHolder;
-        //        audioSource.Play();
-        //        m_Rigidbody.isKinematic = true;
-        //    }
         if (collision.GetContact(0).thisCollider.tag == "Hilt")
         {
             audioSource.clip = soundHolder;
@@ -77,9 +69,9 @@ public class GamePlay : MonoBehaviour
             m_Rigidbody.isKinematic = true;
             m_Rigidbody.isKinematic = false;
             if (collision.transform.position.y < gameObject.transform.position.y)
-                m_Rigidbody.AddForce(new Vector3(0, 700, 0));
+                m_Rigidbody.AddForce(new Vector3(0, 900, 0));
             //else m_Rigidbody.AddForce(new Vector3(, -200, 0));
-            m_Rigidbody.angularVelocity = new Vector3(0, 0, -800);
+            m_Rigidbody.angularVelocity = new Vector3(0, 0, -100);
         }
         
         if (collision.gameObject.tag == "Ground")
@@ -91,10 +83,10 @@ public class GamePlay : MonoBehaviour
         }
     }
 
-    void OnCollisionExit(Collision collision)
-    {
-        bladeCollider.isTrigger = true;
-    }
+    //void OnCollisionExit(Collision collision)
+    //{
+    //    bladeCollider.isTrigger = true;
+    //}
 
     void OnTriggerEnter(Collider collider)
     {
@@ -107,7 +99,7 @@ public class GamePlay : MonoBehaviour
                     m_Rigidbody.isKinematic = true;
                     audioSource.clip = soundHolder;
                     audioSource.Play();
-                    
+                    isSlow = true;
                 }                     
                 break;
             case "CheckPoint":
@@ -169,7 +161,7 @@ public class GamePlay : MonoBehaviour
 
     void Jump()
     {
-        bladeCollider.isTrigger = true;
+        //bladeCollider.isTrigger = true;
         isSlow = true;
         audioSource.clip = soundKnife;
         audioSource.Play();
@@ -183,23 +175,25 @@ public class GamePlay : MonoBehaviour
             m_Rigidbody.isKinematic = true;
             m_Rigidbody.isKinematic = false;
         }
-        m_Rigidbody.AddForce(new Vector3(0, 100, 0));
-        m_Rigidbody.AddForceAtPosition(force, transform.position - new Vector3(200, 0, 0));
+        //m_Rigidbody.AddForce(new Vector3(0, 100, 0));
+        
+        m_Rigidbody.AddForceAtPosition(force, transform.position - new Vector3(100, 0, 0));
+        m_Rigidbody.angularVelocity = new Vector3(0, 0, -100);
     }
 
     void AdjustRotation()
     {
         if (!isSlow)
         {
-            if (gameObject.transform.right.x > 0 && gameObject.transform.right.y < 0)
+            if (gameObject.transform.right.x > 0.8 && gameObject.transform.right.y < 0)
             {
                 m_Rigidbody.angularVelocity = new Vector3(0, 0, -1f);
                 isSlow = true;
             }
         }
-        else if (gameObject.transform.right.x < 0.9)
+        else if (gameObject.transform.right.x < 0.8)
         {
-            m_Rigidbody.angularVelocity = new Vector3(0, 0, -800);
+            m_Rigidbody.angularVelocity = new Vector3(0, 0, -100);
             isSlow = false;
         }
     }
@@ -210,6 +204,6 @@ public class GamePlay : MonoBehaviour
         gameObject.transform.right = new Vector3(-1, -2, 0);
         m_Rigidbody.isKinematic = true;
         gameOver.SetActive(false);
-        Time.timeScale = 1.1f;
+        Time.timeScale = 1.2f;
     }
 }

@@ -40,7 +40,7 @@ public class GameController : MonoBehaviour
         textLevelCoins.gameObject.SetActive(true);
         gameMenu.SetActive(false);
         restartButton.SetActive(true);
-        Time.timeScale = 1.1f;
+        Time.timeScale = 1.2f;
     }
 
     public void Restart()
