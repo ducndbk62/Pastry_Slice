@@ -13,7 +13,7 @@ public class GamePlay : MonoBehaviour
     public GameObject blade;
     public GameObject btnRevive;
     public GameObject txtCheckPoint;
-    public GameObject wall;
+    //public GameObject wall;
 
     AudioSource audioSource;
     public AudioClip soundKnife;
@@ -114,7 +114,7 @@ public class GamePlay : MonoBehaviour
                 txtCheckPoint.SetActive(true);
                 break;
             case "Bonus":
-                wall.gameObject.GetComponent<Rigidbody>().isKinematic = false;
+                //wall.gameObject.GetComponent<Rigidbody>().isKinematic = false;
                 if (Time.time - lastKinematic > kinematicTime)
                 {
                     m_Rigidbody.isKinematic = true;
@@ -155,6 +155,8 @@ public class GamePlay : MonoBehaviour
                 break;
             case "X10":
                 gameController.GetComponent<GameController>().MultipleLevelCoins(10);
+                Time.timeScale = 0;
+                gameFinish.SetActive(true);
                 break;
         }    
     }
