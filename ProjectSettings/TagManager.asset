@@ -17,6 +17,7 @@ TagManager:
   - X4
   - X5
   - X10
+  - MapModule
   layers:
   - Default
   - TransparentFX
