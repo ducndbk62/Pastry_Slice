@@ -27,6 +27,8 @@ public class GamePlay : MonoBehaviour
     float lastDragTime;
     float dragTime = 0.5f;
 
+    float lastClickTime;
+
     bool isSlow = true;
     bool passedCheckPoint;
     public Vector3 revivePosition;
@@ -54,7 +56,11 @@ public class GamePlay : MonoBehaviour
         {
             
             if (Input.GetButtonDown("Fire1"))
+            {
+                lastClickTime = Time.time;
                 Jump();
+            }
+                
             AdjustRotation();
 
         }
@@ -83,11 +89,6 @@ public class GamePlay : MonoBehaviour
         }
     }
 
-    //void OnCollisionExit(Collision collision)
-    //{
-    //    bladeCollider.isTrigger = true;
-    //}
-
     void OnTriggerEnter(Collider collider)
     {
         switch (collider.gameObject.tag)
@@ -114,7 +115,6 @@ public class GamePlay : MonoBehaviour
                 txtCheckPoint.SetActive(true);
                 break;
             case "Bonus":
-                //wall.gameObject.GetComponent<Rigidbody>().isKinematic = false;
                 if (Time.time - lastKinematic > kinematicTime)
                 {
                     m_Rigidbody.isKinematic = true;
@@ -164,7 +164,7 @@ public class GamePlay : MonoBehaviour
     void Jump()
     {
         //bladeCollider.isTrigger = true;
-        isSlow = true;
+        //isSlow = true;
         audioSource.clip = soundKnife;
         audioSource.Play();
         if (m_Rigidbody.isKinematic)
@@ -187,7 +187,7 @@ public class GamePlay : MonoBehaviour
     {
         if (!isSlow)
         {
-            if (gameObject.transform.right.x > 0.8 && gameObject.transform.right.y < 0)
+            if (gameObject.transform.right.x > 0.8 && gameObject.transform.right.y < 0 && Time.time - lastClickTime > 0.5f)
             {
                 m_Rigidbody.angularVelocity = new Vector3(0, 0, -1f);
                 isSlow = true;
